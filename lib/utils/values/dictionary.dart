@@ -8,8 +8,8 @@ class Dictionary {
   static const String merkType = "Merk Type";
   static const String information = "Keterangan";
   static const String optional = "Optional";
-  static const String isRequired = "wajib diisi";
-
+  static const String isRequired = "tidak boleh kosong";
+  static const String noInternet = "tidak ada koneksi internet";
   static const String descriptionAlert =
       "Pastikan data yang anda upload sudah benar, Klik batalkan jika anda ingin mengubah data atau Pilih lanjutkan jika ingin mengupload data.";
   static const String cancleAlert = "Batalkan";
