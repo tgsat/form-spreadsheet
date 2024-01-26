@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spreadsheet/utils/utils.dart';
 
 class CustomCard {
-  static BoxDecoration cardPrimary({Color color = Colors.white}) {
+  static BoxDecoration cardPrimary() {
     return BoxDecoration(
       color: AppColor.whiteColor,
       borderRadius: BorderRadius.circular(8),
@@ -15,6 +15,13 @@ class CustomCard {
           // You can set this blurRadius as per your requirement
         ),
       ],
+    );
+  }
+
+  static BoxDecoration cardButton() {
+    return BoxDecoration(
+      color: AppColor.primaryColor,
+      borderRadius: BorderRadius.circular(8),
     );
   }
 }

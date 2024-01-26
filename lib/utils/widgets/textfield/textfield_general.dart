@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:spreadsheet/utils/utils.dart';
 
 class CustomTextFieldGeneral extends StatefulWidget {
@@ -14,7 +15,7 @@ class CustomTextFieldGeneral extends StatefulWidget {
   final Function(String?)? refreshUI;
   final TextCapitalization textCapitalization;
   final TextInputAction textInputAction;
-  final bool isActived;
+  final List<TextInputFormatter>? textInputFormatter;
   const CustomTextFieldGeneral({
     super.key,
     required this.controller,
@@ -29,7 +30,7 @@ class CustomTextFieldGeneral extends StatefulWidget {
     this.validateEmail = false,
     this.refreshUI,
     this.textInputAction = TextInputAction.next,
-    this.isActived = false,
+    this.textInputFormatter,
   });
 
   @override
@@ -50,7 +51,7 @@ class _CustomTextFieldGeneralState extends State<CustomTextFieldGeneral> {
   Widget build(BuildContext context) {
     return Section(
       label: widget.label.toUpperCase(),
-      isActived: widget.isActived,
+      isActived: widget.isRequired,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -66,6 +67,7 @@ class _CustomTextFieldGeneralState extends State<CustomTextFieldGeneral> {
                 keyboardType: widget.keyboardType,
                 textInputAction: widget.textInputAction,
                 textCapitalization: widget.textCapitalization,
+                inputFormatters: widget.textInputFormatter,
                 minLines: widget.isLines ? 4 : 1,
                 maxLines: widget.isLines ? null : 1,
                 decoration: InputDecoration(

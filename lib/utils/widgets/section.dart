@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:spreadsheet/utils/utils.dart';
-import 'package:spreadsheet/utils/widgets/dots.dart';
 
 class Section extends StatelessWidget {
   final String label;

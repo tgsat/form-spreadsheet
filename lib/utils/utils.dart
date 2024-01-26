@@ -13,5 +13,8 @@ export 'package:spreadsheet/utils/widgets/res/space.dart';
 export 'package:spreadsheet/utils/widgets/button/botton_opacity.dart';
 export 'package:spreadsheet/utils/widgets/button/button_general.dart';
 export 'package:spreadsheet/utils/widgets/textfield/textfield_general.dart';
+export 'package:spreadsheet/utils/widgets/dropdown/dropdown_general.dart';
 export 'package:spreadsheet/utils/widgets/custom_card.dart';
 export 'package:spreadsheet/utils/widgets/section.dart';
+export 'package:spreadsheet/utils/widgets/dots.dart';
+export 'package:spreadsheet/utils/widgets/custom_appbar.dart';

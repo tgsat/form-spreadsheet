@@ -3,25 +3,20 @@ import 'package:http/http.dart' as http;
 import 'package:spreadsheet/model/form_model.dart';
 
 class FormService {
+  final void Function(String) callback;
   // Google App Script Web URL
   static const String URL =
-      "https://script.google.com/macros/s/AKfycbyyvGGIhJTTmE-VFgoLFi5CpPugVpEY1LknjPQ7YSbHu-OodIob562eDDneEegmI_6Csg/exec";
+      "https://script.google.com/macros/s/AKfycbyIi8wOooMc5pfHSAj0q8PCoKlD7270aTNe4FVHVx9IPuqWGOLG7qDtY4T3ntZ0CMYFuA/exec";
 
   static const STATUS_SUCCESS = "SUCCESS";
+  static const STATUS_FAILURE = "FAILURE";
 
-  void submitForm(FormModel formModel, void Function(String) callback) async {
+  FormService(this.callback);
+
+  void submitForm(FormModel formModel) async {
     try {
-      await http
-          .post(Uri.https(URL), body: formModel.toJson())
-          .then((response) async {
-        if (response.statusCode == 302) {
-          var url = response.headers['location'];
-          await http.get(Uri.https(url!)).then((response) {
-            callback(convert.jsonDecode(response.body)['status']);
-          });
-        } else {
-          callback(convert.jsonDecode(response.body)['status']);
-        }
+      await http.get(Uri.parse(URL + formModel.toParams())).then((response) {
+        callback(convert.jsonDecode(response.body)['status']);
       });
     } catch (e) {
       print(e);

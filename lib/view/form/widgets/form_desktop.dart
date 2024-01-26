@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:sizer/sizer.dart';
 import 'package:spreadsheet/model/form_model.dart';
 import 'package:spreadsheet/service/form_service.dart';
 import 'package:spreadsheet/utils/utils.dart';
@@ -12,139 +14,134 @@ class FormDesktop extends StatefulWidget {
 
 class _FormDesktopState extends State<FormDesktop> {
   final formKey = GlobalKey<FormState>();
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   final nameCont = TextEditingController();
   final mobileCont = TextEditingController();
   final informationCont = TextEditingController();
   final idPelPlnCont = TextEditingController();
-  final jenisEVCont = TextEditingController();
   final typeBranchCont = TextEditingController();
-
-  bool name = false,
-      mobileNo = false,
-      enable = false,
-      information = false,
-      idPelPln = false,
-      typeBranch = false,
-      jenisEv = false;
+  String? chosenValue;
 
   @override
   void initState() {
     super.initState();
   }
 
-  Future<void> _submitForm() async {
+  void _submitForm() {
     if (formKey.currentState!.validate()) {
-      setState(() {
-        enable = true;
-      });
-      FormModel model = FormModel(
-        nameCont.text.trim(),
-        idPelPlnCont.text.trim(),
-        mobileCont.text.trim(),
-        informationCont.text.trim(),
-        jenisEVCont.text.trim(),
-        typeBranchCont.text.trim(),
+      FormModel formModel = FormModel(
+        name: nameCont.text,
+        idPelPLN: idPelPlnCont.text,
+        mobileNo: mobileCont.text,
+        typeBranch: typeBranchCont.text,
+        information: informationCont.text,
+        jenisEV: chosenValue,
       );
 
-      FormService formCont = FormService();
-
-      formCont.submitForm(model, (String response) {
+      FormService scriptCont = FormService((String response) {
         if (response == FormService.STATUS_SUCCESS) {
-          nameCont.clear();
-          mobileCont.clear();
-          idPelPlnCont.clear();
-          informationCont.clear();
-          jenisEVCont.clear();
-          typeBranchCont.clear();
-          setState(() {
-            enable = false;
-          });
-          _showSnackbar("Details Submitted");
+          showSnackBarSuccess(context, "Submit Successfully!");
         } else {
-          nameCont.clear();
-          mobileCont.clear();
-          idPelPlnCont.clear();
-          informationCont.clear();
-          jenisEVCont.clear();
-          typeBranchCont.clear();
-          setState(() {
-            enable = false;
-          });
-          _showSnackbar("Error Occurred!");
+          showSnackBarFailure(context, "Error Occurred While Submitting!");
         }
       });
-      setState(() {
-        enable = false;
-      });
-      _showSnackbar("Submitting Details");
+      showSnackBar(context, "Submitting");
+      scriptCont.submitForm(formModel);
     }
-  }
-
-  // Method to show snackbar with 'message'.
-  _showSnackbar(String message) {
-    scaffoldKey.currentState!.setState(() {
-      showSnackBar(context, message);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    App.init(context);
-    return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            Dictionary.appName,
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                  color: AppColor.whiteColor,
-                  fontWeight: FontWeight.w600,
+    return Form(
+      key: formKey,
+      child: ListView(
+        primary: true,
+        shrinkWrap: true,
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: CustomTextFieldGeneral(
+                  controller: nameCont,
+                  isRequired: true,
+                  label: Dictionary.name,
+                  textCapitalization: TextCapitalization.words,
                 ),
-          )),
-      body: Form(
-        key: formKey,
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            CustomTextFieldGeneral(
-                controller: nameCont,
-                label: Dictionary.name,
-                refreshUI: (val) {
-                  setState(() {
-                    if (val!.trim().isNotEmpty) {
-                      name = true;
-                    } else {
-                      name = false;
-                    }
-                  });
-                }),
-            CustomTextFieldGeneral(
-                controller: idPelPlnCont,
-                label: Dictionary.idpelPln,
-                refreshUI: (val) {
-                  setState(() {
-                    if (val!.trim().isNotEmpty) {
-                      idPelPln = true;
-                    } else {
-                      idPelPln = false;
-                    }
-                  });
-                }),
-            CustomTextFieldGeneral(
-                controller: mobileCont,
-                label: Dictionary.noPhone,
-                refreshUI: (val) {
-                  setState(() {
-                    if (val!.trim().isNotEmpty) {
-                      mobileNo = true;
-                    } else {
-                      mobileNo = false;
-                    }
-                  });
-                }),
-          ],
-        ),
+              ),
+              Expanded(
+                child: GeneralDropdown(
+                  isRequired: true,
+                  listDropdownItem: <String>[
+                    'Motor Listrik',
+                    'Mobil Listrik',
+                  ].map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value,
+                      ),
+                    );
+                  }).toList(),
+                  selectedItem: chosenValue,
+                  hint: Dictionary.jenisEV,
+                  press: (selectItem) {
+                    setState(() {
+                      chosenValue = selectItem;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: CustomTextFieldGeneral(
+                  controller: idPelPlnCont,
+                  isRequired: true,
+                  label: Dictionary.idpelPln,
+                  textCapitalization: TextCapitalization.words,
+                ),
+              ),
+              Expanded(
+                child: CustomTextFieldGeneral(
+                  controller: typeBranchCont,
+                  isRequired: true,
+                  label: Dictionary.merkType,
+                  textCapitalization: TextCapitalization.words,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: CustomTextFieldGeneral(
+                  controller: mobileCont,
+                  label: Dictionary.noPhone,
+                  isRequired: true,
+                  keyboardType: TextInputType.number,
+                  textInputFormatter: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  textInputAction: TextInputAction.done,
+                ),
+              ),
+              Expanded(
+                child: CustomTextFieldGeneral(
+                  controller: informationCont,
+                  label: Dictionary.information,
+                  textCapitalization: TextCapitalization.words,
+                  isRequired: false,
+                ),
+              ),
+            ],
+          ),
+          Space.y(2.w)!,
+          ButtonGeneral(
+            onTap: _submitForm,
+          ),
+        ],
       ),
     );
   }
