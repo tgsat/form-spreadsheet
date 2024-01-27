@@ -13,7 +13,7 @@ class ButtonGeneral extends StatelessWidget {
     return Container(
         height: 40,
         width: AppSize.maxWidth(context),
-        padding: const EdgeInsets.symmetric(horizontal: 60),
+        margin: const EdgeInsets.symmetric(horizontal: 16),
         decoration: CustomCard.cardButton(),
         child: Center(
           child: ButtonOpacity(

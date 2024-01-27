@@ -1,8 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
-import 'package:spreadsheet/model/form_model.dart';
-import 'package:spreadsheet/service/form_service.dart';
 import 'package:spreadsheet/utils/utils.dart';
 
 class FormDesktop extends StatefulWidget {
@@ -16,36 +15,34 @@ class _FormDesktopState extends State<FormDesktop> {
   final formKey = GlobalKey<FormState>();
   final nameCont = TextEditingController();
   final mobileCont = TextEditingController();
-  final informationCont = TextEditingController();
   final idPelPlnCont = TextEditingController();
   final typeBranchCont = TextEditingController();
+  final informationCont = TextEditingController();
   String? chosenValue;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void _submitForm() {
-    if (formKey.currentState!.validate()) {
-      FormModel formModel = FormModel(
-        name: nameCont.text,
-        idPelPLN: idPelPlnCont.text,
-        mobileNo: mobileCont.text,
-        typeBranch: typeBranchCont.text,
-        information: informationCont.text,
-        jenisEV: chosenValue,
-      );
+    final String name = nameCont.text;
+    final String idPel = idPelPlnCont.text;
+    final String phone = mobileCont.text;
+    final String branch = typeBranchCont.text;
+    final String description = informationCont.text;
 
-      FormService scriptCont = FormService((String response) {
-        if (response == FormService.STATUS_SUCCESS) {
-          showSnackBarSuccess(context, "Submit Successfully!");
-        } else {
-          showSnackBarFailure(context, "Error Occurred While Submitting!");
-        }
+    if (name != '' && idPel != '' && phone != '' && branch != '') {
+      FirebaseFirestore.instance.collection('EVUIWNTT').doc(uniqueKey).set({
+        "id": uniqueKey,
+        "name": name,
+        "idPelPLN": idPel,
+        "phone": phone,
+        "jenisEV": chosenValue,
+        "branchType": branch,
+        "keterangan": description,
       });
-      showSnackBar(context, "Submitting");
-      scriptCont.submitForm(formModel);
+      showToastFlush(context, 'Berhasil menambahkan data', color: Colors.green);
+      nameCont.clear();
+      idPelPlnCont.clear();
+      mobileCont.clear();
+      typeBranchCont.clear();
+      informationCont.clear();
     }
   }
 
@@ -138,9 +135,19 @@ class _FormDesktopState extends State<FormDesktop> {
             ],
           ),
           Space.y(2.w)!,
-          ButtonGeneral(
-            onTap: _submitForm,
-          ),
+          ButtonGeneral(onTap: () {
+            if (nameCont.text == '' &&
+                mobileCont.text == '' &&
+                idPelPlnCont.text == '' &&
+                typeBranchCont.text == '') {
+              showToastFlush(context, 'Field tidak boleh kosong!');
+            } else {
+              showSnackBar(context, 'Mohon tunggu sebentar...');
+              if (formKey.currentState!.validate()) {
+                _submitForm();
+              }
+            }
+          }),
         ],
       ),
     );

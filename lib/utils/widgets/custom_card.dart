@@ -5,7 +5,7 @@ class CustomCard {
   static BoxDecoration cardPrimary() {
     return BoxDecoration(
       color: AppColor.whiteColor,
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(0),
       boxShadow: const [
         BoxShadow(
           color: Colors.grey,
@@ -21,7 +21,7 @@ class CustomCard {
   static BoxDecoration cardButton() {
     return BoxDecoration(
       color: AppColor.primaryColor,
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(0),
     );
   }
 }
