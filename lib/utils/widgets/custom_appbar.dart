@@ -4,7 +4,7 @@ import 'package:spreadsheet/utils/utils.dart';
 class CustomAppBar {
   static AppBar general(BuildContext context, String title) {
     return AppBar(
-        centerTitle: true,
+        centerTitle: Responsive.isDesktop(context) ? false : true,
         title: Text(
           title,
           style: Theme.of(context).textTheme.bodyText1!.copyWith(

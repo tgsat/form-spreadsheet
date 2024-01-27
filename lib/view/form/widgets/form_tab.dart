@@ -37,7 +37,7 @@ class _FormTabState extends State<FormTab> {
         "branchType": branch,
         "keterangan": description,
       });
-      showToastFlush(context, 'Berhasil menambahkan data', color: Colors.green);
+      showSnackBarSuccess(context, 'Berhasil menambahkan data');
       nameCont.clear();
       idPelPlnCont.clear();
       mobileCont.clear();
@@ -122,7 +122,7 @@ class _FormTabState extends State<FormTab> {
                 mobileCont.text == '' &&
                 idPelPlnCont.text == '' &&
                 typeBranchCont.text == '') {
-              showToastFlush(context, 'Field tidak boleh kosong!');
+              showSnackBarFailure(context, 'Field tidak boleh kosong!');
             } else {
               showSnackBar(context, 'Mohon tunggu sebentar...');
               if (formKey.currentState!.validate()) {
