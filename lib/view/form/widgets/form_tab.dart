@@ -27,7 +27,11 @@ class _FormTabState extends State<FormTab> {
     final String branch = typeBranchCont.text;
     final String description = informationCont.text;
 
-    if (name != '' && idPel != '' && phone != '' && branch != '') {
+    if (name != '' &&
+        idPel != '' &&
+        phone != '' &&
+        branch != '' &&
+        chosenValue != '') {
       FirebaseFirestore.instance.collection('EVUIWNTT').doc(uniqueKey).set({
         "id": uniqueKey,
         "name": name,
@@ -121,7 +125,8 @@ class _FormTabState extends State<FormTab> {
             if (nameCont.text == '' &&
                 mobileCont.text == '' &&
                 idPelPlnCont.text == '' &&
-                typeBranchCont.text == '') {
+                typeBranchCont.text == '' &&
+                chosenValue == '') {
               showSnackBarFailure(context, 'Field tidak boleh kosong!');
             } else {
               showSnackBar(context, 'Mohon tunggu sebentar...');
