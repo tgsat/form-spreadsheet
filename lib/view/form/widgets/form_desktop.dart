@@ -110,31 +110,27 @@ class _FormDesktopState extends State<FormDesktop> {
               ),
             ],
           ),
-          Row(
-            children: [
-              Expanded(
-                child: CustomTextFieldGeneral(
-                  controller: mobileCont,
-                  label: Dictionary.noPhone,
-                  isRequired: true,
-                  keyboardType: TextInputType.number,
-                  textInputFormatter: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  textInputAction: TextInputAction.done,
-                ),
-              ),
-              Expanded(
-                child: CustomTextFieldGeneral(
-                  controller: informationCont,
-                  label: Dictionary.information,
-                  textCapitalization: TextCapitalization.words,
-                  isRequired: false,
-                ),
-              ),
+          CustomTextFieldGeneral(
+            controller: mobileCont,
+            label: Dictionary.noPhone,
+            isRequired: true,
+            keyboardType: TextInputType.number,
+            textInputFormatter: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly,
             ],
+            textInputAction: TextInputAction.done,
           ),
-          Space.y(2.w)!,
+          CustomTextFieldGeneral(
+            controller: informationCont,
+            label: Dictionary.information,
+            keyboardType: TextInputType.multiline,
+            textCapitalization: TextCapitalization.words,
+            textInputAction: TextInputAction.done,
+            isRequired: false,
+            isLines: true,
+            maxLength: 3,
+          ),
+          Space.y(4.w)!,
           ButtonGeneral(onTap: () {
             if (nameCont.text == '' &&
                 mobileCont.text == '' &&
