@@ -128,7 +128,7 @@ class _FormDesktopState extends State<FormDesktop> {
             textInputAction: TextInputAction.done,
             isRequired: false,
             isLines: true,
-            maxLength: 3,
+            maxLength: 300,
           ),
           Space.y(4.w)!,
           ButtonGeneral(onTap: () {
