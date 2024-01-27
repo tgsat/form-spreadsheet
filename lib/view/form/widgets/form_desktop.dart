@@ -143,7 +143,6 @@ class _FormDesktopState extends State<FormDesktop> {
                 chosenValue == '') {
               showSnackBarFailure(context, 'Field tidak boleh kosong!');
             } else {
-              showSnackBar(context, 'Mohon tunggu sebentar...');
               if (formKey.currentState!.validate()) {
                 _submitForm();
               }
