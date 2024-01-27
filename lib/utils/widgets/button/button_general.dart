@@ -20,7 +20,11 @@ class ButtonGeneral extends StatelessWidget {
             onTap: onTap!,
             child: Text(
               Dictionary.submit,
-              style: const AppFonts(size: 16, color: AppColor.whiteColor).text,
+              style: const AppFonts(
+                      size: 16,
+                      color: AppColor.whiteColor,
+                      fontWeight: FontWeight.w900)
+                  .text,
             ),
           ),
         ));
