@@ -15,6 +15,8 @@ class Dictionary {
   static const String cancleAlert = "Batalkan";
   static const String nextAlert = "Lanjutkan";
   static const String submit = "Submit";
+  static const String submitSuccess = "Berhasil menambahkan data";
+  static const String submitfailure = "Field (*) tidak boleh kosong!";
   static const String submitData = "Data terkirim";
   static const String errorOccurred = "Terjadi kesalahan!";
   static const String sending = "Mengirimkan...";

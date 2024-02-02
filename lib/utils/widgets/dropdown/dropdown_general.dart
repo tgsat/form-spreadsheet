@@ -31,6 +31,7 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
       isActived: widget.isRequired,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: double.infinity,
@@ -52,7 +53,7 @@ class _GeneralDropdownState extends State<GeneralDropdown> {
               ),
               isExpanded: true,
               validator: (val) {
-                if (val!.isEmpty && widget.isRequired) {
+                if (val == null && widget.isRequired) {
                   setState(() {
                     isError = true;
                     messageError = '${widget.hint} ${Dictionary.isRequired}';

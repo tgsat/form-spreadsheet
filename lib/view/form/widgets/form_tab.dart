@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:spreadsheet/utils/utils.dart';
+import 'package:spreadsheet/view/splash/splash_page.dart';
 
 class FormTab extends StatefulWidget {
   const FormTab({super.key});
@@ -40,13 +41,11 @@ class _FormTabState extends State<FormTab> {
         "jenisEV": chosenValue,
         "branchType": branch,
         "keterangan": description,
+      }).then((value) {
+        showSnackBarSuccess(context, Dictionary.submitSuccess);
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const SplashPage()));
       });
-      showSnackBarSuccess(context, 'Berhasil menambahkan data');
-      nameCont.clear();
-      idPelPlnCont.clear();
-      mobileCont.clear();
-      typeBranchCont.clear();
-      informationCont.clear();
     }
   }
 
@@ -118,7 +117,7 @@ class _FormTabState extends State<FormTab> {
             textInputAction: TextInputAction.done,
             isRequired: false,
             isLines: true,
-            maxLength: 300,
+            maxLength: 200,
           ),
           Space.y(4.w)!,
           ButtonGeneral(onTap: () {
@@ -127,7 +126,7 @@ class _FormTabState extends State<FormTab> {
                 idPelPlnCont.text == '' &&
                 typeBranchCont.text == '' &&
                 chosenValue == '') {
-              showSnackBarFailure(context, 'Field tidak boleh kosong!');
+              showSnackBarFailure(context, Dictionary.submitfailure);
             } else {
               if (formKey.currentState!.validate()) {
                 _submitForm();

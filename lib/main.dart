@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:sizer/sizer.dart';
-import 'package:spreadsheet/controller/network_controller.dart';
+import 'package:spreadsheet/data/controller/network_controller.dart';
 import 'package:spreadsheet/utils/utils.dart';
 import 'package:spreadsheet/view/form/form_page.dart';
 

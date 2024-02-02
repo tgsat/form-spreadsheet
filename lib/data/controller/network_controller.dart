@@ -2,7 +2,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../utils/utils.dart';
+import '../../utils/utils.dart';
 
 class NetworkController extends GetxController {
   final Connectivity _connectivity = Connectivity();
