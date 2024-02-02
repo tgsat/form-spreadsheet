@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:spreadsheet/utils/utils.dart';
-import 'package:spreadsheet/view/splash/splash_page.dart';
+import 'dart:html' as html;
 
 class FormTab extends StatefulWidget {
   const FormTab({super.key});
@@ -42,10 +42,11 @@ class _FormTabState extends State<FormTab> {
         "branchType": branch,
         "keterangan": description,
       }).then((value) {
-        showSnackBarSuccess(context, Dictionary.submitSuccess);
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const SplashPage()));
+        Future.delayed(const Duration(milliseconds: 2), () {
+          html.window.location.reload();
+        });
       });
+      showSnackBarSuccess(context, Dictionary.submitSuccess);
     }
   }
 

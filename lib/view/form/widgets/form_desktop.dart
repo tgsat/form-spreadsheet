@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sizer/sizer.dart';
 import 'package:spreadsheet/utils/utils.dart';
-import 'package:spreadsheet/view/splash/splash_page.dart';
+import 'dart:html' as html;
 
 class FormDesktop extends StatefulWidget {
   const FormDesktop({super.key});
@@ -29,11 +29,7 @@ class _FormDesktopState extends State<FormDesktop> {
     final String branch = typeBranchCont.text;
     final String description = informationCont.text;
 
-    if (name != '' &&
-        idPel != '' &&
-        phone != '' &&
-        branch != '' &&
-        chosenValue != '') {
+    if (formKey.currentState!.validate()) {
       FirebaseFirestore.instance.collection('EVUIWNTT').doc(uniqueKey).set({
         "id": uniqueKey,
         "name": name,
@@ -43,10 +39,11 @@ class _FormDesktopState extends State<FormDesktop> {
         "branchType": branch,
         "keterangan": description,
       }).then((value) {
-        showSnackBarSuccess(context, Dictionary.submitSuccess);
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const SplashPage()));
+        Future.delayed(const Duration(milliseconds: 2), () {
+          html.window.location.reload();
+        });
       });
+      showSnackBarSuccess(context, Dictionary.submitSuccess);
     }
   }
 
@@ -135,19 +132,9 @@ class _FormDesktopState extends State<FormDesktop> {
             maxLength: 200,
           ),
           Space.y(4.w)!,
-          ButtonGeneral(onTap: () {
-            if (nameCont.text == '' &&
-                mobileCont.text == '' &&
-                idPelPlnCont.text == '' &&
-                typeBranchCont.text == '' &&
-                chosenValue == '') {
-              showSnackBarFailure(context, Dictionary.submitfailure);
-            } else {
-              if (formKey.currentState!.validate()) {
-                _submitForm();
-              }
-            }
-          }),
+          ButtonGeneral(
+            onTap: () => _submitForm(),
+          ),
         ],
       ),
     );

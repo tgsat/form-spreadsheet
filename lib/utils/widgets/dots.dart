@@ -15,12 +15,11 @@ class Dots extends StatelessWidget {
       children: [
         child,
         if (isActived)
-          const Text(
-            '*',
-            style: TextStyle(
-              color: Colors.red,
-            ),
-          ),
+          Text('*',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyText1!
+                  .copyWith(color: Colors.red)),
       ],
     );
   }
